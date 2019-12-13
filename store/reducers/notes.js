@@ -1,21 +1,26 @@
 import {ADD_NOTES} from '../actions/notes'
-
+import Note from  '../../models/note'
+const NOTES = [
+    new Note('c1','Cyrus'),
+    new Note('c2','Stephen'),
+    new Note('c3','Sam'),
+]
 const initialState = {
-    notes:[],
+    notes:NOTES,
     favNotes:[]
 }
 
 const notesReducer = (state = initialState, action) => {
-    switch (action) {
+    switch (action.type) {
         case ADD_NOTES:
-            const newNote = {
-                id: Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
-                content:action.content
-            }
+            console.log('new notes detected in reduce')
+            const id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)
+            const newNote  = new Note(id, action.noteContent)
+            console.log(newNote)
             const existingNotes = [...state.notes]
-            existingNotes.concat(newNote)
+            // existingNotes = existingNotes.concat(newNote)
             console.log(existingNotes)
-            return {...state,notes:existingNotes}
+            return {...state,notes:existingNotes.concat(newNote)}
             break;
     
         default:

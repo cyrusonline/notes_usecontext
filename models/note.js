@@ -4,3 +4,4 @@ class Note{
         this.title = title
     }
 }
+export default Note

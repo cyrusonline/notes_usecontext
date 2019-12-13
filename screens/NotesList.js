@@ -1,41 +1,43 @@
-import React, {useState, useCallback} from 'react';
-import { StyleSheet, Text, View , TextInput, Button, FlatList} from 'react-native';
-import { useDispatch,useSelector } from 'react-redux'
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux'
 
 import notesReducer from '../store/reducers/notes'
-import {addNotes} from '../store/actions/notes'
+import { addNotes } from '../store/actions/notes'
 
 const NotesList = props => {
-  const [text,setText] = useState('')
-  const notes = useSelector(state=>state.notes.notes)
+  const [text, setText] = useState('')
+  const notes = useSelector(state => state.notes.notes)
   const notesstring = JSON.stringify(notes)
   const dispatch = useDispatch()
-  const addNewNotes = (content) =>{
+  const addNewNotes = (content) => {
     // alert('ggg')
     console.log(content)
     dispatch(addNotes(content))
   }
 
-    const renderItem = ({item}) =>{
-    <View><Text>{item.title}</Text></View>
+  const renderItem = ({ item }) => {
+
+    return <View>
+      <Text>{item.title}</Text></View>
   }
 
-  const  Item = ({ title })=> {
+  const Item = ({ title }) => {
     return (
       <View style={styles.item}>
+
         <Text style={styles.title}>{title}</Text>
       </View>
     );
   }
- 
+
   return (<View style={styles.container}>
-    <TextInput style={styles.textbox} onChangeText={text=>setText(text)}/>
-    <Button title="ENTER" onPress={()=>{addNewNotes(text)}}/>
+    <TextInput style={styles.textbox} onChangeText={text => setText(text)} />
+    <Button title="ENTER" onPress={() => { addNewNotes(text) }} />
     <Text>{text}</Text>
     <Text>{notesstring}</Text>
-  {notes.length>0 ? <FlatList data={notes} keyExtractor={ (item,index)=>item.id} renderItem={({ item }) => <Item title={item.title} />}/>:<Text>nothing here</Text>}
-  {/* {notes.length>0 ? <FlatList data={notes} keyExtractor={ (item,index)=>item.id} renderItem={({ item }) => <Item title={item.title} />}/>:<Text>nothing here</Text>} */}
-    </View>)
+    {notes.length > 0 ? <FlatList data={notes} keyExtractor={(item, index) => item.id} renderItem={renderItem} /> : <Text>nothing here</Text>}
+  </View>)
 }
 
 const styles = StyleSheet.create({
@@ -45,11 +47,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 50
   },
-  textbox:{
-    borderColor:'gray',
-    borderWidth:1,
-    width:'90%',
-    height:40
+  textbox: {
+    borderColor: 'gray',
+    borderWidth: 1,
+    width: '90%',
+    height: 40
   }
 });
 

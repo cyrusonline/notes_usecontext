@@ -1,4 +1,4 @@
-import {ADD_NOTES} from '../actions/notes'
+import {ADD_NOTES, TOGGLE_FAVORITE} from '../actions/notes'
 import Note from  '../../models/note'
 const NOTES = [
     new Note('c1','Cyrus'),
@@ -21,6 +21,9 @@ const notesReducer = (state = initialState, action) => {
             // existingNotes = existingNotes.concat(newNote)
             console.log(existingNotes)
             return {...state,notes:existingNotes.concat(newNote)}
+            break;
+        case TOGGLE_FAVORITE:
+            console.log('toggle favorite');
             break;
     
         default:

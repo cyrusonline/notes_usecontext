@@ -4,7 +4,8 @@ import FirstScreen from '../screens/FirstScreen';
 import NotesList from '../screens/NotesList'
 
 const Navigation = createStackNavigator({
-    notes:NotesList
+    notes:NotesList,
+    firstscreen:FirstScreen
 })
 
 export default createAppContainer(Navigation)

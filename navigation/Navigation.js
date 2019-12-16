@@ -1,11 +1,12 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation'
-import FirstScreen from '../screens/FirstScreen';
+import FavNotes from '../screens/FavNotes';
 import NotesList from '../screens/NotesList'
 
 const Navigation = createStackNavigator({
     notes:NotesList,
-    firstscreen:FirstScreen
+    favnotes:FavNotes,
+    
 })
 
 export default createAppContainer(Navigation)

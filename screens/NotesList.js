@@ -25,6 +25,9 @@ const NotesList = props => {
   const alertSomething = ()=>{
     alert('alert something')
   }
+  const gotoAnotherScreen = ()=>{
+    props.navigation.navigate('Details')
+  }
 
   const renderItem = ({ item }) => {
 
@@ -42,6 +45,7 @@ const NotesList = props => {
   return (<View style={styles.container}>
     <TextInput style={styles.textbox} onChangeText={text => setText(text)} />
     <Button title="ENTER" onPress={() => { addNewNotes(text) }} />
+    <Button title="FAVORITES" onPress={() => { props.navigation.navigate('favnotes')}} />
     <Text>{text}</Text>
     <Text>{notesstring}</Text>
     {notes.length > 0 ? <FlatList style={{width:'100%'}} data={notes} keyExtractor={(item, index) => item.id} renderItem={renderItem} /> : <Text>nothing here</Text>}
@@ -58,7 +62,7 @@ NotesList.navigationOptions = navigationData => {
         <Item
         title="yes"
         iconName='ios-star'
-        onPress={()=>navigationData.navigation.actions.navigate('firstscreen')}
+        onPress={()=>navigationData.navigation.actions.navigate('favnotes')}
         />
 
        

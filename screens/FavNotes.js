@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Button} from 'react-native';
+import {View,Text,Button, FlatList} from 'react-native';
 import { useSelector } from 'react-redux'
 
 const FavNotes = props => {

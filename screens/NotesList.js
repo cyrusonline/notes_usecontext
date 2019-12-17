@@ -1,37 +1,36 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Button, FlatList , TouchableOpacity} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-
-import notesReducer from '../store/reducers/notes'
+import { HeaderButtons, HeaderButton, Item } from 'react-navigation-header-buttons';
 import { addNotes,toggleFavorite } from '../store/actions/notes'
 
 const NotesList = props => {
   const [text, setText] = useState('')
   const notes = useSelector(state => state.notes.notes)
-  const notesstring = JSON.stringify(notes)
+  const favnotes = useSelector(state => state.notes.favNotes)
+ 
   const dispatch = useDispatch()
   const addNewNotes = (content) => {
-    // alert('ggg')
-    console.log(content)
+
     dispatch(addNotes(content))
   }
 
   const toggleFav = (item) =>{
     console.log(item.id)
     dispatch(toggleFavorite(item.id))
-    alert('alert message')
+    
   }
  
 
   const renderItem = ({ item }) => {
-
+    const existingIndex = favnotes.findIndex(note=>note.id === item.id)
+    console.log(existingIndex)
     return <View style={styles.row}>
       
       <Text>{item.title}</Text>
       <TouchableOpacity onPress={()=>{toggleFav(item)}}>
-      <Ionicons name="ios-star" size={32} color="green" />
+      <Ionicons name={existingIndex>=0?'ios-star':'ios-star-outline'} size={32} color="green" />
       </TouchableOpacity>
       </View>
   }
@@ -42,26 +41,32 @@ const NotesList = props => {
     <TextInput style={styles.textbox} onChangeText={text => setText(text)} />
     <Button title="ENTER" onPress={() => { addNewNotes(text) }} />
     <Button title="FAVORITES" onPress={() => { props.navigation.navigate('favnotes')}} />
-    <Text>{text}</Text>
-    <Text>{notesstring}</Text>
+   
+    
     {notes.length > 0 ? <FlatList style={{width:'100%'}} data={notes} keyExtractor={(item, index) => item.id} renderItem={renderItem} /> : <Text>nothing here</Text>}
   </View>)
 }
 
-NotesList.navigationOptions = navigationData => {
-  console.log(navigationData.navigation.actions)
+
+const IoniconsHeaderButton = passMeFurther => (
+  // the `passMeFurther` variable here contains props from <Item .../> as well as <HeaderButtons ... />
+  // and it is important to pass those props to `HeaderButton`
+  // then you may add some information like icon size or color (if you use icons)
+  <HeaderButton {...passMeFurther} IconComponent={Ionicons} iconSize={23} color="blue" />
+);
+
+NotesList.navigationOptions = ({navigation}) => {
   return {
     headerTitle: 'headerTitle',
     headerTintColor:'black',
     headerRight:(
-      <HeaderButtons>
+
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
         title="yes"
         iconName='ios-star'
-        onPress={()=>navigationData.navigation.actions.navigate('favnotes')}
+        onPress={()=>navigation.navigate('favnotes')}
         />
-
-       
       </HeaderButtons>
     )
   }
@@ -89,33 +94,6 @@ const styles = StyleSheet.create({
 });
 
 export default NotesList
-// export default function App() {
-//   const rootReducer = combineReducers({notes: notesReducer});
-//   const store = createStore(rootReducer);
-//   const [text,setText] = useState('')
-//   // const [notes, setNotes] = useState([])
-//   const notes = useSelector(state => state.notes.notes);
-//   console.log('notes',notes)
-//   const dispatch = useDispatch()
-//   const addNotesHandler = ()=>{
 
-//     dispatch(addNotes(text))
-//   }
-
-//   // const renderItem = itemData =>{
-//   //   <View><Text>{itemData.item}</Text></View>
-//   // }
-//   return (
-//     <Provider store={store}>
-//     <View style={styles.container}>
-//       <TextInput style={styles.textbox}
-//       onChangeText={text=>setText(text)}
-//       />
-//       <Button title="enter" onPress={addNotesHandler}/>
-//       {notes.length>0 ? <Text>Something here</Text>: <Text>Nothing here</Text>}
-//     </View>
-//     </Provider>
-//   );
-// }
 
 

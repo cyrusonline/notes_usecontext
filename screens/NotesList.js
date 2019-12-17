@@ -69,7 +69,7 @@ const IoniconsHeaderButton = passMeFurther => (
 
 NotesList.navigationOptions = ({navigation}) => {
   return {
-    headerTitle: 'headerTitle',
+    headerTitle: 'My Notes',
     headerTintColor:'black',
     headerRight:(
 
@@ -96,13 +96,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 40
   },
-  row:{
-    flex:1,
-    paddingVertical:25,
-    flexDirection:'row',
-    justifyContent:'space-between',
-    borderBottomWidth:1
-  }
+
 });
 
 export default NotesList

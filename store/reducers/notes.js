@@ -22,7 +22,7 @@ const notesReducer = (state = initialState, action) => {
 
             const existingIndex = state.favNotes.findIndex(note => note.id === action.noteId)
             if (existingIndex>=0) {
-                const updatedFavNotes = [...state.updatedFavNotes]
+                const updatedFavNotes = [...state.favNotes]
                 updatedFavNotes.splice(existingNotes,1)
                 return {...state,favNotes:updatedFavNotes}
             } else {

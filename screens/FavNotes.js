@@ -1,14 +1,45 @@
 import React from 'react';
-import {View,Text,Button, FlatList} from 'react-native';
-import { useSelector } from 'react-redux'
+import {View,Text,Button, FlatList, StyleSheet} from 'react-native';
+import { useDispatch,useSelector } from 'react-redux'
+import NoteItem from '../components/NoteItem';
+import { toggleFavorite } from '../store/actions/notes'
+
+
 
 const FavNotes = props => {
 
      const favnotes = useSelector(state => state.notes.favNotes)
-    return (
-        <View><Text>{JSON.stringify(favnotes)}</Text>
+     const dispatch = useDispatch()
+     const toggleFav = (item) =>{
+        console.log(item.id)
+        dispatch(toggleFavorite(item.id))
+        
+      }
+     const renderItem = ({ item }) => {
+        const isFav = favnotes.some(note=>note.id === item.id)
+    
+       
+        return <NoteItem
+          title={item.title}
+          isFav={isFav}
+          onToggleFav = {()=>{toggleFav(item)}}
+        /> 
+        
+      
+      }
+    return (<View style={styles.container}>
+        <FlatList style={{width:'100%'}} data={favnotes} keyExtractor={(item, index) => item.id} renderItem={renderItem} />
         </View>
     )
 }
-
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      paddingTop: 50
+    },
+ 
+  
+  });
 export default FavNotes

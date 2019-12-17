@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons';
 import { HeaderButtons, HeaderButton, Item } from 'react-navigation-header-buttons';
 import { addNotes,toggleFavorite } from '../store/actions/notes'
+import NoteItem from '../components/NoteItem';
 
 const NotesList = props => {
   const [text, setText] = useState('')
@@ -23,16 +24,27 @@ const NotesList = props => {
   }
  
 
-  const renderItem = ({ item }) => {
-    const existingIndex = favnotes.findIndex(note=>note.id === item.id)
-    console.log(existingIndex)
-    return <View style={styles.row}>
+  // const renderItem = ({ item }) => {
+  //   const existingIndex = favnotes.findIndex(note=>note.id === item.id)
+  //   console.log(existingIndex)
+  //   return <View style={styles.row}>
       
-      <Text>{item.title}</Text>
-      <TouchableOpacity onPress={()=>{toggleFav(item)}}>
-      <Ionicons name={existingIndex>=0?'ios-star':'ios-star-outline'} size={32} color="green" />
-      </TouchableOpacity>
-      </View>
+  //     <Text>{item.title}</Text>
+  //     <TouchableOpacity onPress={()=>{toggleFav(item)}}>
+  //     <Ionicons name={existingIndex>=0?'ios-star':'ios-star-outline'} size={32} color="green" />
+  //     </TouchableOpacity>
+  //     </View>
+  // }
+  const renderItem = ({ item }) => {
+    const isFav = favnotes.some(note=>note.id === item.id)
+   
+    return <NoteItem
+      title={item.title}
+      isFav={isFav}
+      onToggleFav = {()=>{toggleFav(item)}}
+    /> 
+    
+  
   }
 
   

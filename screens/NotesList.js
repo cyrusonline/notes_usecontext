@@ -18,23 +18,19 @@ const NotesList = props => {
     dispatch(addNotes(content))
   }
 
-  const alertMessage = (item) =>{
-    console.log(JSON.stringify(item))
+  const toggleFav = (item) =>{
+    console.log(item.id)
+    dispatch(toggleFavorite(item.id))
     alert('alert message')
   }
-  const alertSomething = ()=>{
-    alert('alert something')
-  }
-  const gotoAnotherScreen = ()=>{
-    props.navigation.navigate('Details')
-  }
+ 
 
   const renderItem = ({ item }) => {
 
     return <View style={styles.row}>
       
       <Text>{item.title}</Text>
-      <TouchableOpacity onPress={()=>{alertMessage(item)}}>
+      <TouchableOpacity onPress={()=>{toggleFav(item)}}>
       <Ionicons name="ios-star" size={32} color="green" />
       </TouchableOpacity>
       </View>

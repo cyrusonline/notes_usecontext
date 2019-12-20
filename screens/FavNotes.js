@@ -16,9 +16,7 @@ const FavNotes = props => {
         
       }
      const renderItem = ({ item }) => {
-        const isFav = favnotes.some(note=>note.id === item.id)
-    
-       
+        const isFav = favnotes.some(note=>note.id === item.id) 
         return <NoteItem
           title={item.title}
           isFav={isFav}
@@ -31,6 +29,12 @@ const FavNotes = props => {
         <FlatList style={{width:'100%'}} data={favnotes} keyExtractor={(item, index) => item.id} renderItem={renderItem} />
         </View>
     )
+}
+
+FavNotes.navigationOptions = ()=>{
+    return{
+        headerTitle:'Favorites'
+    }
 }
 const styles = StyleSheet.create({
     container: {

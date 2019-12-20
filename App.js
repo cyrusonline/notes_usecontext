@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View , TextInput, Button, FlatList} from 'react-native';
+import React from 'react';
+import { StyleSheet} from 'react-native';
 import {createStore, combineReducers} from 'redux'
-import {Provider, useSelector, useDispatch} from 'react-redux'
+import {Provider} from 'react-redux'
 import notesReducer from './store/reducers/notes'
 import addNotes from './store/actions/notes'
 import Navigation from './navigation/Navigation'
@@ -10,20 +10,7 @@ const rootReducer = combineReducers({notes: notesReducer});
 const store = createStore(rootReducer);
 
 export default function App() {
-  // const dispatch = useDispatch()
-
-  // const [text,setText] = useState('')
-  // const [notes, setNotes] = useState([])
-  // const notes = useSelector(state => state.notes.notes);
-  // console.log('notes',notes)
-  // const addNotesHandler = ()=>{
-
-  //   dispatch(addNotes(text))
-  // }
-
-  // const renderItem = itemData =>{
-  //   <View><Text>{itemData.item}</Text></View>
-  // }
+ 
   return (
     <Provider store={store}>
       <Navigation/>

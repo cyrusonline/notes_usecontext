@@ -23,18 +23,6 @@ const NotesList = props => {
     
   }
  
-
-  // const renderItem = ({ item }) => {
-  //   const existingIndex = favnotes.findIndex(note=>note.id === item.id)
-  //   console.log(existingIndex)
-  //   return <View style={styles.row}>
-      
-  //     <Text>{item.title}</Text>
-  //     <TouchableOpacity onPress={()=>{toggleFav(item)}}>
-  //     <Ionicons name={existingIndex>=0?'ios-star':'ios-star-outline'} size={32} color="green" />
-  //     </TouchableOpacity>
-  //     </View>
-  // }
   const renderItem = ({ item }) => {
     const isFav = favnotes.some(note=>note.id === item.id)
    

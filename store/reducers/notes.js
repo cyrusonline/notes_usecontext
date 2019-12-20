@@ -1,9 +1,9 @@
 import {ADD_NOTES, TOGGLE_FAVORITE} from '../actions/notes'
 import Note from  '../../models/note'
 const NOTES = [
-    new Note('c1','Cyrus'),
-    new Note('c2','Stephen'),
-    new Note('c3','Sam'),
+    new Note('c1','Buying Milk'),
+    new Note('c2','Going to School'),
+    new Note('c3','Watch Neflix'),
 ]
 const initialState = {
     notes:NOTES,
@@ -23,7 +23,7 @@ const notesReducer = (state = initialState, action) => {
             const existingIndex = state.favNotes.findIndex(note => note.id === action.noteId)
             if (existingIndex>=0) {
                 const updatedFavNotes = [...state.favNotes]
-                updatedFavNotes.splice(existingNotes,1)
+                updatedFavNotes.splice(existingIndex,1)
                 return {...state,favNotes:updatedFavNotes}
             } else {
                 const note = state.notes.find(note => note.id===action.noteId)

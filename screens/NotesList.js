@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button, FlatList , TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons';
 import { HeaderButtons, HeaderButton, Item } from 'react-navigation-header-buttons';
@@ -31,7 +31,6 @@ const NotesList = props => {
       isFav={isFav}
       onToggleFav = {()=>{toggleFav(item)}}
     /> 
-    
   
   }
 

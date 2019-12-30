@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Button, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import { useDispatch,useSelector } from 'react-redux'
 import NoteItem from '../components/NoteItem';
 import { toggleFavorite } from '../store/actions/notes'
@@ -11,7 +11,6 @@ const FavNotes = props => {
      const favnotes = useSelector(state => state.notes.favNotes)
      const dispatch = useDispatch()
      const toggleFav = (item) =>{
-        console.log(item.id)
         dispatch(toggleFavorite(item.id))
         
       }

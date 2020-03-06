@@ -1,17 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
-import { useDispatch,useSelector } from 'react-redux'
 import NoteItem from '../components/NoteItem';
-import { toggleFavorite } from '../store/actions/notes'
+import {NotesContext} from '../context/notescontext'
+import {TOGGLE_FAVORITE} from '../context/types'
 
 
-
-const FavNotes = props => {
-
-     const favnotes = useSelector(state => state.notes.favNotes)
-     const dispatch = useDispatch()
+const FavNotes = () => {
+      const {state,dispatch} = useContext(NotesContext)
+     const favnotes = state.favNotes
      const toggleFav = (item) =>{
-        dispatch(toggleFavorite(item.id))
+        dispatch({type:TOGGLE_FAVORITE, noteId: item.id})
         
       }
      const renderItem = ({ item }) => {

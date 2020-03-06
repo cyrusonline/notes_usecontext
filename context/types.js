@@ -1,0 +1,2 @@
+export const ADD_NOTES = 'ADD_NOTES';
+export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';

@@ -1,49 +1,56 @@
-import React, { useState} from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons';
 import { HeaderButtons, HeaderButton, Item } from 'react-navigation-header-buttons';
-import { addNotes,toggleFavorite } from '../store/actions/notes'
+import { ADD_NOTES, TOGGLE_FAVORITE } from '../context/types'
 import NoteItem from '../components/NoteItem';
+import { NotesContext } from '../context/notescontext'
 
 const NotesList = props => {
   const [text, setText] = useState('')
-  const notes = useSelector(state => state.notes.notes)
-  const favnotes = useSelector(state => state.notes.favNotes)
- 
-  const dispatch = useDispatch()
+
+  const { state, dispatch } = useContext(NotesContext)
+  const notes = state.notes
+  const favnotes = state.favNotes
+
+
+
   const addNewNotes = (content) => {
 
-    dispatch(addNotes(content))
+    dispatch({ type: ADD_NOTES, noteContent: content })
+
   }
 
-  const toggleFav = (item) =>{
-    console.log(item.id)
-    dispatch(toggleFavorite(item.id))
-    
+  const toggleFav = (item) => {
+
+    dispatch({ type: TOGGLE_FAVORITE, noteId: item.id })
+
+
   }
- 
+
   const renderItem = ({ item }) => {
-    const isFav = favnotes.some(note=>note.id === item.id)
-   
+    const isFav = favnotes.some(note => note.id === item.id)
+
     return <NoteItem
       title={item.title}
       isFav={isFav}
-      onToggleFav = {()=>{toggleFav(item)}}
-    /> 
-  
+      onToggleFav={() => { toggleFav(item) }}
+    />
+
   }
 
-  
+
 
   return (<View style={styles.container}>
     <TextInput style={styles.textbox} onChangeText={text => setText(text)} />
     <Button title="ENTER" onPress={() => { addNewNotes(text) }} />
-    <Button title="FAVORITES" onPress={() => { props.navigation.navigate('favnotes')}} />
-   
-    
-    {notes.length > 0 ? <FlatList style={{width:'100%'}} data={notes} keyExtractor={(item, index) => item.id} renderItem={renderItem} /> : <Text>nothing here</Text>}
-  </View>)
+    <Button title="FAVORITES" onPress={() => { props.navigation.navigate('favnotes') }} />
+
+    {/* <FlatList style={{width:'100%'}} data={notes} keyExtractor={(item, index) => item.id} renderItem={renderItem} />  */}
+    {notes.length > 0 ? <FlatList style={{ width: '100%' }} data={notes} keyExtractor={(item, index) => item.id} renderItem={renderItem} /> : <Text>nothing here</Text>}
+  </View>
+  )
 }
 
 
@@ -54,17 +61,17 @@ const IoniconsHeaderButton = passMeFurther => (
   <HeaderButton {...passMeFurther} IconComponent={Ionicons} iconSize={23} color="blue" />
 );
 
-NotesList.navigationOptions = ({navigation}) => {
+NotesList.navigationOptions = ({ navigation }) => {
   return {
     headerTitle: 'My Notes',
-    headerTintColor:'black',
-    headerRight:(
+    headerTintColor: 'black',
+    headerRight: (
 
       <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
-        title="yes"
-        iconName='ios-star'
-        onPress={()=>navigation.navigate('favnotes')}
+          title="yes"
+          iconName='ios-star'
+          onPress={() => navigation.navigate('favnotes')}
         />
       </HeaderButtons>
     )

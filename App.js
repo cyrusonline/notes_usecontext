@@ -1,18 +1,30 @@
-import React from 'react';
-import {createStore, combineReducers} from 'redux'
-import {Provider} from 'react-redux'
-import notesReducer from './store/reducers/notes'
+import React, { useReducer } from 'react';
+import notesReducer from './context/notesreducer'
 import Navigation from './navigation/Navigation'
-const rootReducer = combineReducers({notes: notesReducer});
+import { NotesContext } from './context/notescontext'
+import Note from './models/note'
+// const rootReducer = combineReducers({notes: notesReducer});
 
-const store = createStore(rootReducer);
+// const store = createStore(rootReducer);
 
 export default function App() {
- 
+
+  const NOTES = [
+    new Note('c1', 'Buying Milk'),
+    new Note('c2', 'Going to School'),
+    new Note('c3', 'Watch Neflix'),
+  ]
+  const initialState = {
+    notes: NOTES,
+    favNotes: []
+  }
+
+  const [state, dispatch] = useReducer(notesReducer, initialState)
+
   return (
-    <Provider store={store}>
-      <Navigation/>
-    </Provider>
+    <NotesContext.Provider value={{ state, dispatch }}>
+      <Navigation />
+    </NotesContext.Provider>
   );
 }
 
